@@ -120,6 +120,7 @@ ul li.completed span {
 }
 
 .done-btn,
+.undo-btn,
 .edit-btn,
 .delete-btn {
     padding: 6px 12px;
@@ -132,13 +133,37 @@ ul li.completed span {
 }
 
 .done-btn {
+    padding: 6px 12px;
     background-color: #2ecc71;
     color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
     transition: background-color 0.3s ease;
+    height: 40px;
+    line-height: 1;
 }
 
 .done-btn:hover {
     background-color: #27ae60;
+}
+
+.undo-btn {
+    padding: 6px 12px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    height: 40px;
+    line-height: 1;
+}
+
+.undo-btn:hover {
+    background-color: #e67e22;
 }
 
 .edit-btn {

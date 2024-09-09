@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App</title>
-    <link rel="stylesheet" href="{% static 'todo.css' %}">
+    <link rel="stylesheet" href="{% static 'todo/base.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -26,18 +26,27 @@
             {% for task in tasks %}
 
             <li>
+                {% if task.is_done %}
+                <s>{{task.title}}</s>
+                {% else %}
                 <span>{{task.title}}</span>
+                {% endif %}
 
                 <div class="action-buttons">
-                    <form method="POST" action="" style="display: inline;">
-                        <button type="submit" class="done-btn">Done</button>
+                    <form method="POST" action="{% url 'todo:task-toggle' pk=task.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="{% if task.is_done %}undo-btn{% else %}done-btn{% endif %}">
+                            {% if task.is_done %}Undo{% else %}Done{% endif %}
+                        </button>
                     </form>
 
-                    <form method="POST" action="" style="display: inline;">
+                    <form method="POST" action="{% url 'todo:task-update' pk=task.id %}" style="display: inline;">
+                        {% csrf_token %}
                         <button type="submit" class="edit-btn">Edit</button>
                     </form>
 
-                    <form method="POST" action="" style="display: inline;">
+                    <form method="POST" action="{% url 'todo:task-delete' pk=task.id %}" style="display: inline;">
+                        {% csrf_token %}
                         <button type="submit" class="delete-btn">Delete</button>
                     </form>
                 </div>

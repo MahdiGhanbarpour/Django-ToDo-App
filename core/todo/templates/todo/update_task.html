@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="{% static 'todo/base.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <form method="GET" action="{% url 'todo:task-list' %}" class="logout-form">
+        <button type="submit" class="logout-btn">Back</button>
+    </form>
+
+    <div class="todo-container">
+        <h2>Edit Task</h2>
+
+        <form method="POST" action="{% url 'todo:task-update' pk=task.id %}" class="task-form">
+            {% csrf_token %}
+            <input type="text" id="task-input" name="title" value="{{ task.title }}" placeholder="Edit Task" required>
+            <button type="submit" class="add-task-btn">Edit Task</button>
+        </form>
+    </div>
+</body>
+</html>
