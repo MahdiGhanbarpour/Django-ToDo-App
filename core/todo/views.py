@@ -1,12 +1,10 @@
-from django.forms import BaseModelForm
-from django.http import HttpResponse
-from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Task
 from django.urls import reverse_lazy
 
 # Create your views here.
-class TodoListView(ListView):
+class TodoListView(LoginRequiredMixin, ListView):
     '''
     A view for showing list of tasks
     '''
@@ -14,7 +12,7 @@ class TodoListView(ListView):
     context_object_name = "tasks"
     template_name = "todo/index.html"
     
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     '''
     A view for creating new tasks
     '''
@@ -26,14 +24,14 @@ class TaskCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     '''
     A view for deleting tasks
     '''
     model = Task
     success_url = reverse_lazy("todo:task-list")
     
-class TaskToggleView(UpdateView):
+class TaskToggleView(LoginRequiredMixin, UpdateView):
     '''
     A view for changing is_done property of selected task
     '''
@@ -46,7 +44,7 @@ class TaskToggleView(UpdateView):
         form.save()
         return super().form_valid(form)
     
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     '''
     A view for changing title of selected task
     '''

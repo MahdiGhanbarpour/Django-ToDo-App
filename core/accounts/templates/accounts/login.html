@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'accounts/accounts.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post" action="{% url 'accounts:user-login' %}">
+            {% csrf_token %}
+            <label for="username">Username :</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password :</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Login</button>
+
+            <p>Don't have an account? <a href="{% url 'accounts:user-register' %}">Register</a></p>
+        </form>
+
+        {% if form.errors %}
+        <div class="alert alert-error">
+            <ul>
+                {% for field in form %}
+                {% if field.errors %}
+                {% for error in field.errors %}
+                <li>{{ error|escape }}</li>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% if form.non_field_errors %}
+            {{ form.non_field_errors }}
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
