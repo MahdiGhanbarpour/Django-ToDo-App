@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="{% static 'todo.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <form method="POST" action="" class="logout-form">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+
+    <div class="todo-container">
+        <h2>Todo List</h2>
+
+        <form method="POST" action="{% url 'todo:task-create' %}" class="task-form">
+            {% csrf_token %}
+            <input type="text" id="task-input" name="title" placeholder="New Task" required>
+            <button type="submit" class="add-task-btn">Add Task</button>
+        </form>
+
+        <ul id="todo-list">
+            {% for task in tasks %}
+
+            <li>
+                <span>{{task.title}}</span>
+
+                <div class="action-buttons">
+                    <form method="POST" action="" style="display: inline;">
+                        <button type="submit" class="done-btn">Done</button>
+                    </form>
+
+                    <form method="POST" action="" style="display: inline;">
+                        <button type="submit" class="edit-btn">Edit</button>
+                    </form>
+
+                    <form method="POST" action="" style="display: inline;">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </div>
+            </li>
+            
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
