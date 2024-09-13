@@ -92,17 +92,17 @@ p a:hover {
     border-radius: 8px;
     font-size: 14px;
     line-height: 1.5;
-    color: black; /* رنگ متن برای وضوح بیشتر */
+    color: black;
 }
 
 .alert-error {
-    background-color: #f8d7da; /* رنگ پس‌زمینه روشن‌تر برای خطا */
+    background-color: #f8d7da;
     border: 1px solid #f5c6cb;
-    color: #721c24; /* رنگ متن برای ارور (قرمز تیره) */
+    color: #721c24;
 }
 
 .alert-error ul {
-    list-style-type: none; /* حذف علامت‌های لیست */
+    list-style-type: none;
     padding-left: 0;
 }
 
@@ -111,5 +111,5 @@ p a:hover {
 }
 
 .alert-error li:last-child {
-    margin-bottom: 0; /* حذف فاصله برای آخرین آیتم */
+    margin-bottom: 0;
 }
