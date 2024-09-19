@@ -13,3 +13,7 @@ djangorestframework-simplejwt
 
 # Email third party modules
 django-mail-templated
+
+# refactoring and tests
+pytest
+pytest-django

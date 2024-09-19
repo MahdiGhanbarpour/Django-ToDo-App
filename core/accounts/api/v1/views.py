@@ -165,14 +165,13 @@ class RequestPasswordResetApiView(generics.GenericAPIView):
     '''
     A class to create and send a password reset token to the user's email
     '''
-    permission_classes = [IsAuthenticated]
     serializer_class = ResetPasswordRequestSerializer
 
     def post(self, request):
         username = request.data['username']
         email = request.data['email']
         
-        user = User.objects.get(username=username)
+        user = get_object_or_404(User, username=username)
 
         if user:
             token_generator = PasswordResetTokenGenerator()
@@ -192,7 +191,6 @@ class ResetPasswordApiView(generics.GenericAPIView):
     Reset the password based on the entered token
     '''
     serializer_class = ResetPasswordSerializer
-    permission_classes = [IsAuthenticated]
 
     def post(self, request, token):
         serializer = self.serializer_class(data=request.data)
