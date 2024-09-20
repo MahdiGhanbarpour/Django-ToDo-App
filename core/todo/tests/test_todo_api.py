@@ -21,7 +21,15 @@ def common_task(common_user):
 class TestPostApi:
     client = APIClient()
 
-    def test_get_todo_list_response_200_status(self):
+    def test_get_todo_list_anonymous_response_401_status(self):
+        url = reverse("todo:api-v1:todo-list")
+        response = self.client.get(url)
+
+        assert response.status_code == 401
+
+    def test_get_todo_list_logged_in_response_200_status(self, common_user):
+        self.client.force_login(common_user)
+
         url = reverse("todo:api-v1:todo-list")
         response = self.client.get(url)
 
@@ -52,13 +60,25 @@ class TestPostApi:
 
         assert response.status_code == 400
 
-    def test_get_task_detail_response_200_status(self, common_task):
+    def test_get_task_detail_anonymous_response_401_status(self, common_task):
+        url = reverse("todo:api-v1:todo-detail", kwargs={"pk": common_task.id})
+        response = self.client.get(url)
+
+        assert response.status_code == 401
+
+    def test_get_task_detail_logged_in_response_200_status(
+        self, common_task, common_user
+    ):
+        self.client.force_login(common_user)
+
         url = reverse("todo:api-v1:todo-detail", kwargs={"pk": common_task.id})
         response = self.client.get(url)
 
         assert response.status_code == 200
 
-    def test_get_incorrect_task_detail_response_404_status(self):
+    def test_get_incorrect_task_detail_response_404_status(self, common_user):
+        self.client.force_login(common_user)
+
         url = reverse("todo:api-v1:todo-detail", kwargs={"pk": 8155161})
         response = self.client.get(url)
 
