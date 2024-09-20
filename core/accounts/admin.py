@@ -1,23 +1,23 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, PasswordReset
 
 # Register your models here.
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ("username", "is_superuser", "last_login")
-    list_filter = ("username", "is_superuser")
+    list_display = ("username", "email", "is_superuser", 'is_verified', "last_login")
+    list_filter = ("username", "email", "is_superuser", 'is_verified')
     search_fields = ("username",)
     
     fieldsets = (
         ("Authentication", {
             'fields': (
-                'username', 'password', 
+                'username', "email", 'password', 
             ),
         }),
         ("Permissions", {
             'fields': (
-                'is_staff', 'is_active', 'is_superuser'
+                'is_staff', 'is_active', 'is_superuser', 'is_verified'
             ),
         }),
         ("Groupe permissions", {
@@ -35,6 +35,8 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         ("Authentication", {
             "classes" : ("wide", ),
-            'fields': ('username', 'password1', 'password2', 'is_staff', 'is_active', 'is_superuser'),
+            'fields': ('username', "email", 'password1', 'password2', 'is_staff', 'is_active', 'is_superuser', 'is_verified'),
         }),
     )
+    
+admin.site.register(PasswordReset)
