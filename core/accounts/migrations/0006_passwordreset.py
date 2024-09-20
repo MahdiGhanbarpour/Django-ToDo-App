@@ -6,17 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0005_alter_user_is_active'),
+        ("accounts", "0005_alter_user_is_active"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PasswordReset',
+            name="PasswordReset",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('username', models.EmailField(max_length=254)),
-                ('token', models.CharField(max_length=250)),
-                ('created_date', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("username", models.EmailField(max_length=254)),
+                ("token", models.CharField(max_length=250)),
+                ("created_date", models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]
