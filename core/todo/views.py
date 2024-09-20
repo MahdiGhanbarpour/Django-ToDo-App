@@ -14,6 +14,9 @@ class TodoListView(LoginRequiredMixin, ListView):
     context_object_name = "tasks"
     template_name = "todo/index.html"
 
+    def get_queryset(self):
+        return Task.objects.filter(author=self.request.user)
+
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     """
@@ -37,6 +40,9 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = reverse_lazy("todo:task-list")
 
+    def get_queryset(self):
+        return Task.objects.filter(author=self.request.user)
+
 
 class TaskToggleView(LoginRequiredMixin, UpdateView):
     """
@@ -52,6 +58,9 @@ class TaskToggleView(LoginRequiredMixin, UpdateView):
         form.save()
         return super().form_valid(form)
 
+    def get_queryset(self):
+        return Task.objects.filter(author=self.request.user)
+
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     """
@@ -62,3 +71,6 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     fields = ["title"]
     template_name = "todo/update_task.html"
     success_url = reverse_lazy("todo:task-list")
+
+    def get_queryset(self):
+        return Task.objects.filter(author=self.request.user)
