@@ -1,5 +1,11 @@
+# General modules
 django
 python-decouple
 Pillow
 djangorestframework
-markdown
+
+# Third party modules
+markdown 
+django-filter
+drf-yasg[validation]
+setuptools
