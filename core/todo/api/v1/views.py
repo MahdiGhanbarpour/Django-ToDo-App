@@ -6,6 +6,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework import status
+from django.core.cache import cache
+import requests
 
 
 class TaskModelViewSet(viewsets.ModelViewSet):
@@ -21,6 +24,28 @@ class TaskModelViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Task.objects.filter(author=self.request.user)
+
+    @action(detail=False, methods=["GET"], url_path="weather-status")
+    def get_weather_status(self, request):
+        """A action to get weather status"""
+        weather_data = cache.get("weather_data_api")
+
+        if not weather_data:
+            response = requests.get(
+                "http://api.weatherapi.com/v1/current.json"
+                "?key=778b31e7497747888dc100540230907&q=Bushehr&aqi=no"
+            )
+
+            if response.status_code == 200:
+                weather_data = response.json()
+                weather_data["source"] = "API"
+                cache.set("weather_data_api", weather_data, 1200)
+            else:
+                return Response({"detail": "ERROR"}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            weather_data["source"] = "Cache"
+
+        return Response(weather_data, status=status.HTTP_200_OK)
 
     @action(methods=["GET", "POST"], detail=True, url_path="change-status")
     def toggle_status(self, request, pk):

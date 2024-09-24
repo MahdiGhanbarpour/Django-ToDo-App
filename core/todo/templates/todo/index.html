@@ -14,6 +14,13 @@
         <button type="submit" class="logout-btn">Logout</button>
     </form>
 
+    <div class="weather-container">
+        <h4>Weather Status</h4>
+        <p><strong>{{ weather_data.location.name }}</strong></p>
+        <p>{{ weather_data.current.temp_c }} °C, {{ weather_data.current.condition.text }}</p>
+        <p><em>Data loaded from: {{ weather_data.source }}</em></p>
+    </div>    
+
     <div class="todo-container">
         <h2>Todo List</h2>
 
