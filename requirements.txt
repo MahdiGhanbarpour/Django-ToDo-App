@@ -10,6 +10,7 @@ django-filter
 drf-yasg[validation]
 setuptools
 djangorestframework-simplejwt
+requests
 
 # Email third party modules
 django-mail-templated
